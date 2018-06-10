@@ -1,2 +1,2 @@
 npm install express serve-favicon morgan cookie-parser --save
-npm install body-parser debug express-partials@0.3.0 --save
+npm install body-parser debug express-partials@0.3.0 supervisor --save
