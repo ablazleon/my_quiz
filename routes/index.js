@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const quizController = require('../controllers/quiz');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -10,5 +11,11 @@ router.get('/', function(req, res, next) {
 router.get('/author', (req, res, next) => {
   res.render('author');
 });
+
+// Quizzes
+router.get('/quizzes',                    quizController.index);
+router.get('/quizzes/:quizId(\\d+)',      quizController.show);
+router.get('/quizzes/:quizId(\\d+)/edit', quizController.edit);
+router.put('/quizzes/:quizId(\\d+)',      quizController.update);
 
 module.exports = router;

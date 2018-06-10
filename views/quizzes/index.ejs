@@ -1,0 +1,28 @@
+
+<h1>
+    Questions:
+</h1>
+
+<% for (let i in quizzes){ %>
+
+    <% let quiz = quizzes[i]; %>
+
+
+    <table>
+        <tr>
+            <td>
+                <%= quiz.question %>
+            </td>
+            <td>
+                <a href="/quizzes/<%= quiz.id%>"> <button>show</button> </a>
+            </td>
+            <td>
+                <a href="/quizzes/<%= quiz.id%>/edit"> <button>edit</button> </a>
+            </td>
+        </tr>
+
+    </table>
+<% } %>
+
+
+
