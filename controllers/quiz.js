@@ -2,6 +2,18 @@
 // To make it visible from outer every method is an atributte of a class.
 const models = require('../models');
 
+// Autoload of the quiz associated with :quizId anytime this appear
+exports.load = (req, res, next, quizId) => {
+
+    const quiz = models.quiz.findById(Number(quizId));
+
+    if (quiz){
+        req.quiz = quiz;
+        next();
+    } else {
+        next(new Error( "There is no quiz with this id " + quizId));
+    }
+}
 
 /*
 * GET /quizzes
@@ -11,7 +23,7 @@ exports.index = (req, res, next) => {
     const quizzes = models.quiz.findAll();
 
     res.render('quizzes/index.ejs', {quizzes}) ;
-    console.log("No se pilla al acceder a index");
+
 };
 
 /*
@@ -22,16 +34,8 @@ exports.index = (req, res, next) => {
 */
 exports.show = (req, res, next) => {
 
-
-    const quizId = Number(req.params.quizId);
-    const quiz = models.quiz.findById(quizId);
-
-    if(quiz){
-        res.render('quizzes/show', {quiz}) ;
-    }
-    else{
-        next(new Error('There is no quiz with id='+ quizId));
-    }
+    const {quiz} = req;
+    res.render('quizzes/show', {quiz}) ;
 };
 
 /*
@@ -42,16 +46,8 @@ exports.show = (req, res, next) => {
 */
 exports.edit = (req, res, next) => {
 
-
-    const quizId = Number(req.params.quizId);
-    const quiz = models.quiz.findById(quizId);
-
-    if(quiz){
-        res.render('quizzes/edit', {quiz}) ;
-    }
-    else{
-        next(new Error('There is no quiz with id='+ quizId));
-    }
+    const {quiz} = req;
+    res.render('quizzes/edit', {quiz}) ;
 };
 
 /*
@@ -62,9 +58,7 @@ exports.edit = (req, res, next) => {
 */
 exports.update = (req, res, next) => {
 
-
-    const quizId = Number(req.params.quizId);
-    const quiz = models.quiz.findById(quizId);
+    const {quiz} = req;
 
     if(quiz){
        quiz.question = req.body.question;
@@ -73,8 +67,5 @@ exports.update = (req, res, next) => {
        models.quiz.update(quiz);
 
        res.redirect('/quizzes');
-    }
-    else{
-        next(new Error('There is no quiz with id='+ quizId));
     }
 };

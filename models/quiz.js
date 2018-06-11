@@ -36,6 +36,14 @@ exports.findById = (id) => {
 *  @return void
 */
 exports.update = (quiz) => {
-    quizzes[quiz.id] = quiz;
+    // quizzes.quiz.id = quiz; By an strange reason, in this way assign the entire array.
 
+    const index = quizzes.findIndex(q => quiz.id === q.id);
+    if (index >= 0 ){
+        quizzes[index] ={
+            id: quiz.id,
+            question: (quiz.question || "").trim(),
+            answer: (quiz.answer || "" ).trim()
+        };
+    }
 };
