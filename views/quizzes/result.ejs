@@ -1,0 +1,11 @@
+<h1>
+    Result:
+</h1>
+
+<p>
+    The answer <b> <%= answer %> </b> is <%= result ? 'Rigth' : 'Wrong'%>.
+</p>
+
+<%if(!result){%>
+    <a href="/quizzes/<%= quiz.id %>/play"> Try it again! </a>
+<%}%>

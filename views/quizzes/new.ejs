@@ -1,0 +1,19 @@
+<h1>
+    Add Question:
+</h1>
+
+<form method="post" action="/quizzes/create?_method=PUT">
+    <div class="wideRow">
+        <label for="preg" class="itemNarrow"> Question: </label>
+        <input type="text" class="itemWide" id="preg" name="question" value="<%= quiz.question %>" placeholder="Question" autocomplete="off"/>
+    </div>
+
+    <div class="wideRow">
+        <label for="resp"  class="itemNarrow">Answer:</label>
+        <input type="text" class="itemWide" id="resp" name="answer" value="<%= quiz.answer %>" placeholder="Answer" autocomplete="off"/>
+    </div>
+</form>
+
+</br>
+<input type="submit" value="Save">
+<a href="/quizzes"><button type="button">Cancel</button></a>

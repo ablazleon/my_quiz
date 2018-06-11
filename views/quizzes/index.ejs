@@ -11,7 +11,7 @@
     <table>
         <tr>
             <td>
-                <%= quiz.question %>
+                <a href="/quizzes/<%= quiz.id%>/play"> <%= quiz.question %> </a>
             </td>
             <td>
                 <a href="/quizzes/<%= quiz.id%>"> <button>show</button> </a>
@@ -19,10 +19,16 @@
             <td>
                 <a href="/quizzes/<%= quiz.id%>/edit"> <button>edit</button> </a>
             </td>
+            <td>
+                <a href="/quizzes/<%= quiz.id%>?_method=DELETE"
+                onClick="return confirm('Delete: <%= quiz.question%>');"> <button>delete</button> </a>
+            </td>
         </tr>
 
     </table>
 <% } %>
+
+<a href="/quizzes/new"> <button> Create a new Question </button></a>
 
 
 

@@ -1,6 +1,22 @@
-// Save the links in the object exports so to be render
-// in  the controllers in the ejs.
 
-const quiz = require('./quiz');
+const path = require('path');
 
-exports.quiz = quiz;
+// Load ORM
+
+const Sequelize = require('sequelize');
+
+const sequelize = new Sequelize("sqlite:quiz.sqlite");
+
+// Import the definition of Quiz Table from quiz.js
+sequelize.import(path.join(__dirname, 'quiz'));
+
+// Create tables
+
+sequelize.sync()
+    .then(() => console.log('Data Bases created successfully'))
+    .catch(error => {
+        console.log("Error creating the data base tables", error);
+        process.exit(1);
+    });
+
+module.exports = sequelize;

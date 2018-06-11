@@ -1,0 +1,19 @@
+<h1>
+    Play:
+</h1>
+
+<form method="get" action="/quizzes/<%= quiz.id %>/check">
+    <div>
+         Question:
+        <b> <%= quiz.question%> </b>
+    </div>
+    <div>
+        <input type="text"
+               name="answer" value="<%= answer %>"
+               placeholder="Answer"> <a href="/quizzes/<%=quiz.id%>/check">
+        <button> Check </button></a>
+    </div>
+
+</form>
+
+<a href="/quizzes"> <button> Go back </button></a>
