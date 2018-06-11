@@ -2,4 +2,6 @@ npm install express serve-favicon morgan cookie-parser --save
 npm install body-parser debug express-partials@0.3.0 supervisor --save
 npm install method-override sequelize@4.37.5 sqlite3@3.1.13 --save
 npm install express-session connect-session-sequelize express-flash --save
-npm install pg@7.4.0 --save
+npm install pg@7.4.0 sequelize-cli@3.2.0 --save
+
+git config credential.helper store
