@@ -4,6 +4,8 @@
 const Sequelize = require("sequelize");
 const {models} = require('../models');
 
+const paginate = require('../helpers/paginate').paginate;
+
 /*
 * If exists quiz it stores it in req.quiz.
 * */
@@ -24,15 +26,35 @@ exports.load = (req, res, next, quizId) => {
 /*
 * GET /quizzes
 */
+// GET /quizzes
 exports.index = (req, res, next) => {
 
-    models.quiz.findAll()
-    .then(quizzes => {
-        res.render('quizzes/index.ejs', {quizzes});
-    })
-    .catch ( error => next(error));
-};
+    models.quiz.count()
+        .then(count => {
 
+            // Pagination:
+
+            const items_per_page = 10;
+
+            // The page to show is given in the query
+            const pageno = parseInt(req.query.pageno) || 1;
+
+            // Create a String with the HTMl used to render the pagination buttons.
+            // This String is added to a local variable of res, which is used into the application layout file.
+            res.locals.paginate_control = paginate(count, items_per_page, pageno, req.url);
+
+            const findOptions = {
+                offset: items_per_page * (pageno - 1),
+                limit: items_per_page
+            };
+
+            return models.quiz.findAll(findOptions);
+        })
+        .then(quizzes => {
+            res.render('quizzes/index.ejs', {quizzes});
+        })
+        .catch(error => next(error));
+};
 /*
 * GET /quizzes/:quizId(//d+)
 *
