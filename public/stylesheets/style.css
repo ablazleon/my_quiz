@@ -39,6 +39,9 @@ a {
   color: #00B7FF;
 }
 
+.right {
+  float: right;
+}
 
 .wideRow {
   display: flex;

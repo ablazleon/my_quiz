@@ -26,10 +26,23 @@ exports.load = (req, res, next, quizId) => {
 /*
 * GET /quizzes
 */
-// GET /quizzes
 exports.index = (req, res, next) => {
 
-    models.quiz.count()
+    let countOptions = {};
+
+    /*
+    * Search: take the req.query and put the quizzes with the desired
+     */
+    const search = req.query.search || '';
+
+    if (search){
+        // It is stored in local.search the treated value
+        const search_like = "%" + search.replace(/ +/g, "%") + "%";
+
+        countOptions.where = {question: { [Sequelize.Op.like]: search_like }};
+    }
+
+    models.quiz.count(countOptions)
         .then(count => {
 
             // Pagination:
@@ -44,6 +57,7 @@ exports.index = (req, res, next) => {
             res.locals.paginate_control = paginate(count, items_per_page, pageno, req.url);
 
             const findOptions = {
+                ...countOptions,
                 offset: items_per_page * (pageno - 1),
                 limit: items_per_page
             };
@@ -51,7 +65,10 @@ exports.index = (req, res, next) => {
             return models.quiz.findAll(findOptions);
         })
         .then(quizzes => {
-            res.render('quizzes/index.ejs', {quizzes});
+            res.render('quizzes/index.ejs', {
+                quizzes,
+                search
+            });
         })
         .catch(error => next(error));
 };
