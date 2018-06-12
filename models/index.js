@@ -17,6 +17,10 @@ sequelize.import(path.join(__dirname, 'quiz'));
 // Import the definition of Quiz Table from quiz.js
 sequelize.import(path.join(__dirname,'tip'));
 
+
+// Import the definition of the Users Table from user.js
+sequelize.import(path.join(__dirname,'user'));
+
 // Session
 sequelize.import(path.join(__dirname, 'session'));
 
