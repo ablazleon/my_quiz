@@ -11,7 +11,7 @@ const paginate = require('../helpers/paginate').paginate;
 * */
 exports.load = (req, res, next, quizId) => {
 
-   models.quiz.findById(quizId)
+   models.quiz.findById(quizId, {include: [ models.tip ]})
    .then(quiz => {
        if(quiz){
            req.quiz = quiz;

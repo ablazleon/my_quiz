@@ -16,4 +16,15 @@
 
 </form>
 
-<a href="/quizzes"> <button> Go back </button></a>
+<h1>
+    Tips:
+</h1>
+
+<% include ../tips/new %>
+
+<% var tips = quiz.tips; %>
+
+<% include ../tips/index %>
+
+
+<a href="/quizzes"><button>Go back</button></a>

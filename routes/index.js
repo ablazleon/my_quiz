@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
+
 const quizController = require('../controllers/quiz');
+const tipController = require('../controllers/tip');
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -26,5 +29,6 @@ router.put('/quizzes/create',             quizController.create);
 router.delete('/quizzes/:quizId(\\d+)',   quizController.destroy);
 router.get('/quizzes/:quizId(\\d+)/play', quizController.play);
 router.get('/quizzes/:quizId(\\d+)/check',quizController.check)
+router.post('/quizzes/:quizId(\\d+)/tips',     tipController.create);
 
 module.exports = router;
