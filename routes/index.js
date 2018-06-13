@@ -43,6 +43,8 @@ router.get('/users/:userId(\\d+)/edit', userController.edit);
 router.put('/users/:userId(\\d+)',      userController.update);
 router.delete('/users/:userId(\\d+)', userController.destroy);
 
+router.get('/users/:userId(\\d+)/quizzes', quizController.index);
+
 // Quizzes
 router.get('/quizzes',                    quizController.index);
 router.get('/quizzes/:quizId(\\d+)',      quizController.show);
