@@ -15,6 +15,7 @@
 
 </ul>
 
+<% if (session.user) { %>
 <p>
     <a href="/users/<%= user.id %>/edit">
         <button type="button"> Edit</button>
@@ -27,5 +28,6 @@
         </button>
     </a>
 </p>
+<% } %>
 
-<a href="/goback"> <button type="button">Go back</button> </a>
+<a href="/goback"><button type="button">Go back</button></a>

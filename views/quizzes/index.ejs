@@ -23,22 +23,24 @@
                 <small> (by <%= quiz.author ? quiz.author.username : "Anonymous" %>) </small>
             </td>
 
+            <% if (session.user) { %>
             <td>
-                <a href="/quizzes/<%= quiz.id%>"> <button>show</button> </a>
+                <a href="/quizzes/<%= quiz.id %>"><button>show</button></a>
             </td>
             <td>
-                <a href="/quizzes/<%= quiz.id%>/edit"> <button>edit</button> </a>
+                <a href="/quizzes/<%= quiz.id %>/edit"><button>edit</button></a>
             </td>
             <td>
-                <a href="/quizzes/<%= quiz.id%>?_method=DELETE"
-                onClick="return confirm('Delete: <%= quiz.question%>');"> <button>delete</button> </a>
+                <a href="/quizzes/<%= quiz.id %>?_method=DELETE"
+                   onClick="return confirm('Delete: <%= quiz.question %>');">
+                    <button>delete</button>
+                </a>
             </td>
+            <% } %>
         </tr>
-
+        <% } %>
     </table>
+
+<% if (session.user) { %>
+<a href="/quizzes/new"><button type="button">Create New Question</button></a>
 <% } %>
-
-<a href="/quizzes/new"> <button> Create a new Question </button></a>
-
-
-
