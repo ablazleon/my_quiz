@@ -3,22 +3,31 @@
     <% for (var i in tips) { %>
     <% var tip = tips[i]; %>
 
+    <% var accepted = tip.accepted; %>
+    <% var isAdmin = session.user && session.user.isAdmin; %>
+    <% var isQuizAuthor = session.user && quizAuthorId && quizAuthorId === session.user.id; %>
+
+    <% if (accepted || isAdmin || isQuizAuthor) { %>
+
     <li>
-
-        <% if (tip.accepted) { %>
-
         <%= tip.text %>
 
-        <% } else if (session.user) { %>
+        <% if (!accepted && (isAdmin || isQuizAuthor)) { %>
 
-        <%= tip.text %>
-
-        <a href="/quizzes/<%= quizId %>/tips/<%= tip.id %>/accept?_method=PUT"><button>Accept</button></a>
+        <a href="/quizzes/<%= quizId %>/tips/<%= tip.id %>/accept?_method=PUT">
+            <button>Accept</button>
+        </a>
 
         <% } %>
 
-        <a href="/quizzes/<%= quizId %>/tips/<%= tip.id %>?_method=DELETE"><button>Delete</button></a>
+        <% if (isAdmin || isQuizAuthor) { %>
 
+        <a href="/quizzes/<%= quizId %>/tips/<%= tip.id %>?_method=DELETE">
+            <button>Delete</button>
+        </a>
+
+        <% } %>
     </li>
+    <% } %>
     <% } %>
 </ul>

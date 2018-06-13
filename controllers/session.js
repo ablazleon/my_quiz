@@ -30,6 +30,7 @@ exports.deleteExpiredUserSession = (req, res, next) => {
     next();
 };
 
+
 // Middleware: Login required.
 //
 // If the user is logged in previously then there will exists
@@ -41,13 +42,60 @@ exports.deleteExpiredUserSession = (req, res, next) => {
 // that url after login; but if redir already exists then
 // this value is maintained.
 //
-exports.loginRequired = function (req, res, next) {
+exports.loginRequired = (req, res, next) => {
     if (req.session.user) {
         next();
     } else {
         res.redirect('/session?redir=' + (req.param('redir') || req.url));
     }
 };
+
+
+
+// MW that allows to pass only if the logged useer in is admin.
+exports.adminRequired = (req, res, next) => {
+
+    const isAdmin = !!req.session.user.isAdmin;
+
+    if (isAdmin) {
+        next();
+    } else {
+        console.log('Prohibited route: the logged in user is not an administrator.');
+        res.send(403);
+    }
+};
+
+// MW that allows to pass only if the logged in user is:
+// - admin
+// - or is the user to be managed.
+exports.adminOrMyselfRequired = (req, res, next) => {
+
+    const isAdmin  = !!req.session.user.isAdmin;
+    const isMyself = req.user.id === req.session.user.id;
+
+    if (isAdmin || isMyself) {
+        next();
+    } else {
+        console.log('Prohibited route: it is not the logged in user, nor an administrator.');
+        res.send(403);
+    }
+};
+
+// MW that allows to pass only if the logged in user is:
+// - admin
+// - and is not the user to manage.
+exports.adminAndNotMyselfRequired = function(req, res, next){
+
+    const isAdmin   = req.session.user.isAdmin;
+    const isAnother = req.user.id !== req.session.user.id;
+
+    if (isAdmin && isAnother) {
+        next();
+    } else {
+        console.log('Prohibited route: the user is logged or is not an administrator.');
+        res.send(403);    }
+};
+
 
 /*
  * User authentication: Checks that the user is registered.
@@ -56,7 +104,7 @@ exports.loginRequired = function (req, res, next) {
  * the password is correct.
  * If the authentication is correct, then the promise is satisfied and returns
  * an object with the User.
- * If the authentication fails, then the promise is also satisfied, but it
+ * If the authentication fails, then the promise is also satisfied, but it
  * returns null.
  */
 const authenticate = (login, password) => {
@@ -105,6 +153,7 @@ exports.create = (req, res, next) => {
                 req.session.user = {
                     id: user.id,
                     username: user.username,
+                    isAdmin: user.isAdmin,
                     expires: Date.now() + maxIdleTime
                 };
 
