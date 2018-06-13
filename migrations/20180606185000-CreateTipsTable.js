@@ -5,7 +5,7 @@ module.exports = {
         return queryInterface.createTable('tips',
             {
                 id: {
-                    type: Sequelize.STRING,
+                    type: Sequelize.INTEGER,
                     allowNull: false,
                     primaryKey: true,
                     autoincrement: true,

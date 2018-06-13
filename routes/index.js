@@ -41,27 +41,27 @@ router.get([
 
 //-----------------------------------------------------------
 
-
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index');
+router.get('/', (req, res, next) => {
+    res.render('index');
 });
 
 // Author page.
 router.get('/author', (req, res, next) => {
-  res.render('author');
+    res.render('author');
 });
 
-// Autoload for routes, using :quizId
 
-router.param('quizId',                    quizController.load);
-router.param('userId',                    userController.load);
+// Autoload for routes using :quizId
+router.param('quizId', quizController.load);
+router.param('userId', userController.load);
+router.param('tipId',  tipController.load);
+
 
 // Routes for the resource /session
 router.get('/session',    sessionController.new);     // login form
 router.post('/session',   sessionController.create);  // create sesion
 router.delete('/session', sessionController.destroy); // close sesion
-
 
 
 // Routes for the resource /users
@@ -120,5 +120,11 @@ router.get('/quizzes/:quizId(\\d+)/check',
 router.post('/quizzes/:quizId(\\d+)/tips',
     sessionController.loginRequired,
     tipController.create);
+router.put('/quizzes/:quizId(\\d+)/tips/:tipId(\\d+)/accept',
+    sessionController.loginRequired,
+    tipController.accept);
+router.delete('/quizzes/:quizId(\\d+)/tips/:tipId(\\d+)',
+    sessionController.loginRequired,
+    tipController.destroy);
 
 module.exports = router;

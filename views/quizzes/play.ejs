@@ -7,28 +7,28 @@
 </h1>
 
 <form method="get" action="/quizzes/<%= quiz.id %>/check">
-    <div>
-         Question:
-        <b> <%= quiz.question%> </b>
-    </div>
-    <div>
-        <input type="text"
-               name="answer" value="<%= answer %>"
-               placeholder="Answer"> <a href="/quizzes/<%=quiz.id%>/check">
-        <button> Check </button></a>
-    </div>
+    <p>
+        Question: <b><%= quiz.question %></b>
+    </p>
 
+
+    <div class="wideRow">
+        <input type="text" class="itemWide" name="answer" value="<%= answer %>" placeholder="Answer" autocomplete="off"/>
+        <input type="submit" class="itemNarrow" value="Check">
+    </div>
 </form>
+
 
 <h1>
     Tips:
 </h1>
 
 <% if (session.user) { %>
-    <% include ../tips/new %>
+<% include ../tips/new %>
 <% } %>
 
 <% var tips = quiz.tips; %>
+<% var quizId = quiz.id; %>
 
 <% include ../tips/index %>
 
